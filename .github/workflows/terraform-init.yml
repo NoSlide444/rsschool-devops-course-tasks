@@ -1,0 +1,25 @@
+name: Terraform Init
+
+on:
+  push:
+    branches:
+       - backend-config="branch=${{ github.ref }}"  # Change this to your default branch if necessary
+  pull_request:
+    branches:
+       - backend-config="branch=${{ github.ref }}"  # Change this to your default branch if necessary
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2.0.0
+        with:
+          terraform_version: 1.5.0  # Specify the Terraform version you want to use
+
+      - name: Terraform Init
+        run: terraform init
